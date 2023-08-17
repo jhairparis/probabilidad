@@ -1,5 +1,5 @@
 from lib.read_file import read_excel
-from lib.tables import create_table_qualitative
+from lib.tables import create_table_qualitative, create_table_quantitative
 from question import questions_settings
 import matplotlib.pyplot as plt
 
@@ -11,6 +11,16 @@ print(settings)
 for i in settings["qualitative"]:
     nominal = settings["qualitative"][i]
     t = create_table_qualitative(i, not nominal, base["data"], settings)
+
+    print("\n Tabla de frecuencias de " + i)
+    print(t)
+
+    t.plot(title="Random")
+    plt.show()
+
+for i in settings["quantitative"]:
+    discrete = settings["quantitative"][i]
+    t = create_table_quantitative(i, discrete, base["data"], settings)
 
     print("\n Tabla de frecuencias de " + i)
     print(t)
