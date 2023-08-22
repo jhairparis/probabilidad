@@ -15,8 +15,7 @@ for i in settings["qualitative"]:
     print("\n Tabla de frecuencias de " + i)
     print(t)
 
-    t.plot(title="Random")
-    plt.show()
+    # Todo: Make Graph
 
 for i in settings["quantitative"]:
     discrete = settings["quantitative"][i]
@@ -25,5 +24,7 @@ for i in settings["quantitative"]:
     print("\n Tabla de frecuencias de " + i)
     print(t)
 
-    t.plot(title="Random")
-    plt.show()
+    # Todo: Make Graph
+
+
+

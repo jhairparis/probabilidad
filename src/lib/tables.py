@@ -54,10 +54,7 @@ def create_table_qualitative(column: str, ordinal: bool, base, settings):
     return table
 
 
-def create_table_quantitative(column: str, discrete: bool, base, settings):
-    if discrete == True:
-        return None
-
+def create_table_quantitative(column: str, grouped: bool, base, settings):
     # init vars
     n = base[column].count()
     category = int(round(1 + 3.32 * log10(n), 0))

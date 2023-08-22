@@ -28,7 +28,7 @@ def questions_settings(headers: list):
             [
                 inquirer.Checkbox(
                     "quantitative",
-                    message="Select variables `Cualitativa`",
+                    message="Select variables `Cunatitativa`",
                     choices=headers,
                 )
             ]
@@ -38,7 +38,7 @@ def questions_settings(headers: list):
             subQ2 = [
                 inquirer.Confirm(
                     value,
-                    message="Is the variable {} `Discreta`?".format(value),
+                    message="Is the variable {} analyze grouped?".format(value),
                     default=True,
                 ),
             ]
