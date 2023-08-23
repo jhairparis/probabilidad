@@ -25,6 +25,3 @@ for i in settings["quantitative"]:
     print(t)
 
     # Todo: Make Graph
-
-
-
