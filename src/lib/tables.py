@@ -1,4 +1,6 @@
 from pandas import DataFrame
+from lib.grouped.deviation import create_table_deviation_grouped
+from lib.grouped.mc_promedi import add_column_mc_promedi
 from question import yesOrNo
 from math import log10
 
@@ -104,5 +106,10 @@ def create_table_quantitative(column: str, grouped: bool, base, settings):
         d.append(row)
 
     table = DataFrame(d, index=range(1, category + 1), columns=headers)
+
+    if grouped == True:
+        average_grouped = add_column_mc_promedi(table)
+        print("Tabla de Desviacion de datos agrupados")
+        print(create_table_deviation_grouped(table, base, column, average_grouped))
 
     return table

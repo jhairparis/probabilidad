@@ -53,13 +53,12 @@ def questions_settings(headers: list):
 
     ans3 = inquirer.prompt(q3)
 
-    # {qualitative:{key: True == nominal},quantitative:{key: True == Discreta}}
+    # {qualitative:{key: True == nominal},quantitative:{key: True == grouped}}
     return dict(ans1, **ans3)
+
 
 def yesOrNo(message):
     q = [
-        inquirer.Confirm(
-            "answer", message=message, default=True
-        ),
+        inquirer.Confirm("answer", message=message, default=True),
     ]
     return inquirer.prompt(q)["answer"]
