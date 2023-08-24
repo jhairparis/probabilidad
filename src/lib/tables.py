@@ -4,6 +4,8 @@ from lib.grouped.deviation import create_table_deviation_grouped
 from lib.grouped.mc_promedi import add_column_mc_promedi
 from lib.notGrouped.average import no_grouped_data_average
 from lib.notGrouped.deviation import deviation_population, deviation_sample
+from lib.notGrouped.geometric_mean import geometric_mean_no_grouped
+from lib.notGrouped.harmonic_mean import harmonic_mean_no_grouped
 from question import yesOrNo
 from math import log10
 
@@ -123,7 +125,15 @@ def create_table_quantitative(column: str, grouped: bool, base, settings):
 
     average_no_grouped = no_grouped_data_average(base, column)
 
-    print("Promedio datos no agrupados de {}: {}".format(column, average_no_grouped))
+    print("Promedio datos de {} no agrupados: {}\n".format(column, average_no_grouped))
+
+    harmonic_mean = harmonic_mean_no_grouped(base, column)
+
+    print("Media armonica de {} no agrupados: {}\n".format(column, harmonic_mean))
+
+    geometric_mean = geometric_mean_no_grouped(base, column)
+
+    print("Media geometrica de {} no agrupados: {}\n".format(column, geometric_mean))
 
     print("Desviacion de {} no agrupados tipo muestral".format(column))
     print(deviation_sample(base, column))
