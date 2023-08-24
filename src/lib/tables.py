@@ -1,6 +1,8 @@
 from pandas import DataFrame
+from lib.grouped.average import grouped_data_average
 from lib.grouped.deviation import create_table_deviation_grouped
 from lib.grouped.mc_promedi import add_column_mc_promedi
+from lib.notGrouped.average import no_grouped_data_average
 from lib.notGrouped.deviation import deviation_population, deviation_sample
 from question import yesOrNo
 from math import log10
@@ -109,11 +111,19 @@ def create_table_quantitative(column: str, grouped: bool, base, settings):
     table = DataFrame(d, index=range(1, category + 1), columns=headers)
 
     if grouped == True:
-        average_grouped = add_column_mc_promedi(table)
+        average_grouped = grouped_data_average(table, base, column)
+        add_column_mc_promedi(table, average_grouped)
+
+        print("Promedio datos agrupados de {}: {}".format(column, average_grouped))
+
         print("Tabla de Desviacion de {} agrupados".format(column))
         print(create_table_deviation_grouped(table, base, column, average_grouped))
 
         return table
+
+    average_no_grouped = no_grouped_data_average(base, column)
+
+    print("Promedio datos no agrupados de {}: {}".format(column, average_no_grouped))
 
     print("Desviacion de {} no agrupados tipo muestral".format(column))
     print(deviation_sample(base, column))
