@@ -6,8 +6,10 @@ from lib.notGrouped.average import no_grouped_data_average
 from lib.notGrouped.deviation import deviation_population, deviation_sample
 from lib.notGrouped.geometric_mean import geometric_mean_no_grouped
 from lib.notGrouped.harmonic_mean import harmonic_mean_no_grouped
+from lib.notGrouped.quartiles import Q1, Q2, Q3, view_graph_moustache
 from question import yesOrNo
 from math import log10
+import numpy as np
 
 
 def percentage_view(val, settings):
@@ -69,6 +71,13 @@ def create_table_quantitative(column: str, grouped: bool, base, settings):
     max = base[column].max()
     range_ = max - min
     amplitude = range_ / category * (1 + 0.001)
+
+    print(f"n: {n}")
+    print(f"categorias/sturges: {category}")
+    print(f"min: {min}")
+    print(f"max: {max}")
+    print(f"rango: {range_}")
+    print(f"amplitud: {amplitude}")
 
     # ---
     d = []
@@ -140,5 +149,27 @@ def create_table_quantitative(column: str, grouped: bool, base, settings):
 
     print("Desviacion de {} no agrupados tipo poblacional".format(column))
     print(deviation_population(base, column))
+
+    q1 = Q1(base, column)
+    q2 = Q2(base, column)
+    q3 = Q3(base, column)
+
+    print("Cuartil Q1 no agrupados".format(column))
+    print(Q1(base, column))
+    print("Cuartil Q2 no agrupados".format(column))
+    print(Q2(base, column))
+    print("Cuartil Q3 no agrupados".format(column))
+    print(Q3(base, column))
+
+    info = {
+        "median": np.median(base[column]),
+        "q1": q1,
+        "q3": q3,
+        "minimum": min,
+        "maximum": max,
+        "mean": average_no_grouped,
+    }
+
+    view_graph_moustache(base, column, info)
 
     return table
