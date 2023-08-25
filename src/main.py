@@ -1,3 +1,4 @@
+from lib.exam.main import exam
 from lib.read_file import read_excel
 from lib.tables import create_table_qualitative, create_table_quantitative
 from question import questions_settings, yesOrNo
@@ -7,6 +8,12 @@ import matplotlib.pyplot as plt
 exit = False
 while not exit:
     base = read_excel()
+
+    other = yesOrNo("Question of exam?")
+    if other:
+        exam(base["data"], base["headers"])
+        break
+
     settings = questions_settings(base["headers"])
 
     for i in settings["qualitative"]:
