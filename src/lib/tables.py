@@ -8,6 +8,7 @@ from lib.notGrouped.deviation import deviation_population, deviation_sample
 from lib.notGrouped.geometric_mean import geometric_mean_no_grouped
 from lib.notGrouped.harmonic_mean import harmonic_mean_no_grouped
 from lib.notGrouped.median_data import median_no_grouped
+from lib.notGrouped.mode_data import mode_no_grouped
 from lib.notGrouped.quartiles import Q1, Q2, Q3, view_graph_moustache
 from question import yesOrNo
 from math import log10
@@ -161,6 +162,10 @@ def create_table_quantitative(column: str, grouped: bool, base, settings):
 
     print(f"Mediana de {column} no agrupados: {median_no__grouped}\n")
 
+    mode_no__grouped = mode_no_grouped(base, column)
+
+    print(f"Moda de {column} no agrupados: {mode_no__grouped}\n")
+
     deviation_s = deviation_sample(base, column)
 
     print(f"Desviacion de {column} no agrupados tipo muestral: {deviation_s}\n")
@@ -177,15 +182,16 @@ def create_table_quantitative(column: str, grouped: bool, base, settings):
     print(f"Cuartil Q2 de {column} no agrupados: {q2}")
     print(f"Cuartil Q3 de {column} no agrupados: {q3}")
 
-    info = {
-        "median": median_no__grouped,
-        "q1": q1,
-        "q3": q3,
-        "minimum": min,
-        "maximum": max,
-        "mean": average_no_grouped,
-    }
+    if settings["view_moustache"] == True:
+        info = {
+            "median": median_no__grouped,
+            "q1": q1,
+            "q3": q3,
+            "minimum": min,
+            "maximum": max,
+            "mean": average_no_grouped,
+        }
 
-    view_graph_moustache(base, column, info)
+        view_graph_moustache(base, column, info)
 
     return table

@@ -28,7 +28,7 @@ def questions_settings(headers: list):
             [
                 inquirer.Checkbox(
                     "quantitative",
-                    message="Select variables `Cunatitativa`",
+                    message="Select variables `Cuantitativa`",
                     choices=headers,
                 )
             ]
@@ -48,6 +48,9 @@ def questions_settings(headers: list):
     q3 = [
         inquirer.Confirm(
             "percentage", message="Do you want view 0.19 like 19%?", default=True
+        ),
+        inquirer.Confirm(
+            "view_moustache", message="Do you want view graph moustache?", default=False
         ),
     ]
 
