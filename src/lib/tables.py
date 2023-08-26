@@ -2,14 +2,15 @@ from pandas import DataFrame
 from lib.grouped.average import grouped_data_average
 from lib.grouped.deviation import create_table_deviation_grouped
 from lib.grouped.mc_promedi import add_column_mc_promedi
+from lib.grouped.median_data import median_grouped
 from lib.notGrouped.average import no_grouped_data_average
 from lib.notGrouped.deviation import deviation_population, deviation_sample
 from lib.notGrouped.geometric_mean import geometric_mean_no_grouped
 from lib.notGrouped.harmonic_mean import harmonic_mean_no_grouped
+from lib.notGrouped.median_data import median_no_grouped
 from lib.notGrouped.quartiles import Q1, Q2, Q3, view_graph_moustache
 from question import yesOrNo
 from math import log10
-import numpy as np
 
 
 def percentage_view(val, settings):
@@ -77,7 +78,7 @@ def create_table_quantitative(column: str, grouped: bool, base, settings):
     print(f"min: {min}")
     print(f"max: {max}")
     print(f"rango: {range_}")
-    print(f"amplitud: {amplitude}")
+    print(f"amplitud/intervalo de la clase: {amplitude}\n")
 
     # ---
     d = []
@@ -123,46 +124,61 @@ def create_table_quantitative(column: str, grouped: bool, base, settings):
 
     if grouped == True:
         average_grouped = grouped_data_average(table, base, column)
+
+        print(f"Promedio de {column} agrupados: {average_grouped}\n")
+
         add_column_mc_promedi(table, average_grouped)
 
-        print("Promedio datos agrupados de {}: {}".format(column, average_grouped))
+        if n % 2 == 0:
+            media = int(n / 2)
+        else:
+            media = int((n / 2) + 1)
 
-        print("Tabla de Desviacion de {} agrupados".format(column))
+        print(f"Media de {column} agrupados: {media}\n")
+
+        median__grouped = median_grouped(table, amplitude, media)
+
+        print(f"Mediana de {column}: {median__grouped}\n")
+
+        print(f"Tabla de Desviacion de {column} agrupados")
         print(create_table_deviation_grouped(table, base, column, average_grouped))
 
         return table
 
     average_no_grouped = no_grouped_data_average(base, column)
 
-    print("Promedio datos de {} no agrupados: {}\n".format(column, average_no_grouped))
+    print(f"Promedio datos de {column} no agrupados: {average_no_grouped}\n")
 
     harmonic_mean = harmonic_mean_no_grouped(base, column)
 
-    print("Media armonica de {} no agrupados: {}\n".format(column, harmonic_mean))
+    print(f"Media armonica de {column} no agrupados: {harmonic_mean}\n")
 
     geometric_mean = geometric_mean_no_grouped(base, column)
 
-    print("Media geometrica de {} no agrupados: {}\n".format(column, geometric_mean))
+    print(f"Media geometrica de {column} no agrupados: {geometric_mean}\n")
 
-    print("Desviacion de {} no agrupados tipo muestral".format(column))
-    print(deviation_sample(base, column))
+    median_no__grouped = median_no_grouped(base, column)
 
-    print("Desviacion de {} no agrupados tipo poblacional".format(column))
-    print(deviation_population(base, column))
+    print(f"Mediana de {column} no agrupados: {median_no__grouped}\n")
+
+    deviation_s = deviation_sample(base, column)
+
+    print(f"Desviacion de {column} no agrupados tipo muestral: {deviation_s}\n")
+
+    deviation_p = deviation_population(base, column)
+
+    print(f"Desviacion de {column} no agrupados tipo poblacional: {deviation_p}\n")
 
     q1 = Q1(base, column)
     q2 = Q2(base, column)
     q3 = Q3(base, column)
 
-    print("Cuartil Q1 no agrupados".format(column))
-    print(Q1(base, column))
-    print("Cuartil Q2 no agrupados".format(column))
-    print(Q2(base, column))
-    print("Cuartil Q3 no agrupados".format(column))
-    print(Q3(base, column))
+    print(f"Cuartil Q1 de {column} no agrupados: {q1}")
+    print(f"Cuartil Q2 de {column} no agrupados: {q2}")
+    print(f"Cuartil Q3 de {column} no agrupados: {q3}")
 
     info = {
-        "median": np.median(base[column]),
+        "median": median_no__grouped,
         "q1": q1,
         "q3": q3,
         "minimum": min,
