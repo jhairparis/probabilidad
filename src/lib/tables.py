@@ -3,6 +3,7 @@ from lib.grouped.average import grouped_data_average
 from lib.grouped.deviation import create_table_deviation_grouped
 from lib.grouped.mc_promedi import add_column_mc_promedi
 from lib.grouped.median_data import median_grouped
+from lib.grouped.mode_data import mode_grouped
 from lib.notGrouped.average import no_grouped_data_average
 from lib.notGrouped.deviation import deviation_population, deviation_sample
 from lib.notGrouped.geometric_mean import geometric_mean_no_grouped
@@ -139,7 +140,11 @@ def create_table_quantitative(column: str, grouped: bool, base, settings):
 
         median__grouped = median_grouped(table, amplitude, media)
 
-        print(f"Mediana de {column}: {median__grouped}\n")
+        print(f"Mediana de {column} agrupados: {median__grouped}\n")
+
+        mode__grouped = mode_grouped(table, amplitude)
+
+        print(f"Moda de {column} agrupados: {mode__grouped}\n")
 
         print(f"Tabla de Desviacion de {column} agrupados")
         print(create_table_deviation_grouped(table, base, column, average_grouped))
