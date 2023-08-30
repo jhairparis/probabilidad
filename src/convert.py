@@ -13,6 +13,7 @@ def convert():
     return "\n".join(res)
 
 
-input("Please copy the text and press enter to convert: ")
-val = convert()
-pc.copy(val)
+def terminal_convert():
+    input("Please copy the text and press enter to convert: ")
+    val = convert()
+    pc.copy(val)

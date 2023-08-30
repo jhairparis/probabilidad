@@ -12,6 +12,7 @@ from lib.notGrouped.harmonic_mean import harmonic_mean_no_grouped
 from lib.notGrouped.median_data import median_no_grouped
 from lib.notGrouped.mode_data import mode_no_grouped
 from lib.notGrouped.quartiles import Q1, Q2, Q3, view_graph_moustache
+from lib.search_group import search_group
 from question import yesOrNo
 from math import log10
 
@@ -125,10 +126,14 @@ def create_table_quantitative(column: str, grouped: bool, base, settings):
 
     table = DataFrame(d, index=range(1, category + 1), columns=headers)
 
+    print("El grupo dado es encontrado entre el Li y Ls de la tabla de frecuencia")
+
     if grouped == True:
         average_grouped = grouped_data_average(table, base, column)
 
-        print(f"Promedio de {column} agrupados: {average_grouped}\n")
+        print(
+            f"Promedio de {column} agrupados: {average_grouped} en el grupo: {search_group(table,average_grouped)}\n"
+        )
 
         add_column_mc_promedi(table, average_grouped)
 
@@ -137,15 +142,21 @@ def create_table_quantitative(column: str, grouped: bool, base, settings):
         else:
             media = int((n / 2) + 1)
 
-        print(f"Media de {column} agrupados: {media}\n")
+        print(
+            f"Media de {column} agrupados: {media} en el grupo: {search_group(table,media)}\n"
+        )
 
         median__grouped = median_grouped(table, amplitude, media)
 
-        print(f"Mediana de {column} agrupados: {median__grouped}\n")
+        print(
+            f"Mediana de {column} agrupados: {median__grouped} en el grupo: {search_group(table,median__grouped)}\n"
+        )
 
         mode__grouped = mode_grouped(table, amplitude)
 
-        print(f"Moda de {column} agrupados: {mode__grouped}\n")
+        print(
+            f"Moda de {column} agrupados: {mode__grouped} en el grupo: {search_group(table,mode__grouped)}\n"
+        )
 
         quartiles__grouped = quartiles_grouped(table, base, column, amplitude)
 
@@ -163,31 +174,45 @@ def create_table_quantitative(column: str, grouped: bool, base, settings):
 
     average_no_grouped = no_grouped_data_average(base, column)
 
-    print(f"Promedio datos de {column} no agrupados: {average_no_grouped}\n")
+    print(
+        f"Promedio datos de {column} no agrupados: {average_no_grouped} en el grupo: {search_group(table,average_no_grouped)}\n"
+    )
 
     harmonic_mean = harmonic_mean_no_grouped(base, column)
 
-    print(f"Media armonica de {column} no agrupados: {harmonic_mean}\n")
+    print(
+        f"Media armonica de {column} no agrupados: {harmonic_mean} en el grupo: {search_group(table,harmonic_mean)}\n"
+    )
 
     geometric_mean = geometric_mean_no_grouped(base, column)
 
-    print(f"Media geometrica de {column} no agrupados: {geometric_mean}\n")
+    print(
+        f"Media geometrica de {column} no agrupados: {geometric_mean} en el grupo: {search_group(table,geometric_mean)}\n"
+    )
 
     median_no__grouped = median_no_grouped(base, column)
 
-    print(f"Mediana de {column} no agrupados: {median_no__grouped}\n")
+    print(
+        f"Mediana de {column} no agrupados: {median_no__grouped} en el grupo: {search_group(table,median_no__grouped)}\n"
+    )
 
     mode_no__grouped = mode_no_grouped(base, column)
 
-    print(f"Moda de {column} no agrupados: {mode_no__grouped}\n")
+    print(
+        f"Moda de {column} no agrupados: {mode_no__grouped} en el grupo: {search_group(table,mode_no__grouped)}\n"
+    )
 
     deviation_s = deviation_sample(base, column)
 
-    print(f"Desviacion de {column} no agrupados tipo muestral: {deviation_s}\n")
+    print(
+        f"Desviacion de {column} no agrupados tipo muestral: {deviation_s} en el grupo: {search_group(table,deviation_s)}\n"
+    )
 
     deviation_p = deviation_population(base, column)
 
-    print(f"Desviacion de {column} no agrupados tipo poblacional: {deviation_p}\n")
+    print(
+        f"Desviacion de {column} no agrupados tipo poblacional: {deviation_p} en el grupo: {search_group(table,deviation_p)}\n"
+    )
 
     q1 = Q1(base, column)
     q2 = Q2(base, column)

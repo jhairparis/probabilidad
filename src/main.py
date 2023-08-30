@@ -1,3 +1,4 @@
+from convert import terminal_convert
 from lib.exam.main import exam
 from lib.read_file import read_excel
 from lib.tables import create_table_qualitative, create_table_quantitative
@@ -12,6 +13,11 @@ while not exit:
     other = yesOrNo("Question of exam?")
     if other:
         exam(base["data"], base["headers"])
+        break
+
+    run_convert = yesOrNo("Do you need convert?")
+    if run_convert:
+        terminal_convert()
         break
 
     settings = questions_settings(base["headers"])
