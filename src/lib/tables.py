@@ -4,6 +4,7 @@ from lib.grouped.deviation import create_table_deviation_grouped
 from lib.grouped.mc_promedi import add_column_mc_promedi
 from lib.grouped.median_data import median_grouped
 from lib.grouped.mode_data import mode_grouped
+from lib.grouped.quartiles import quartiles_grouped
 from lib.notGrouped.average import no_grouped_data_average
 from lib.notGrouped.deviation import deviation_population, deviation_sample
 from lib.notGrouped.geometric_mean import geometric_mean_no_grouped
@@ -145,6 +146,15 @@ def create_table_quantitative(column: str, grouped: bool, base, settings):
         mode__grouped = mode_grouped(table, amplitude)
 
         print(f"Moda de {column} agrupados: {mode__grouped}\n")
+
+        quartiles__grouped = quartiles_grouped(table, base, column, amplitude)
+
+        print(f"Tabla de cuartiles de {column} agrupados")
+        print(quartiles__grouped["table_quartiles"])
+
+        print(f"Cuartil Q1 de {column} agrupados: {quartiles__grouped['q1']}")
+        print(f"Cuartil Q2 de {column} agrupados: {quartiles__grouped['q2']}")
+        print(f"Cuartil Q3 de {column} agrupados: {quartiles__grouped['q3']}\n")
 
         print(f"Tabla de Desviacion de {column} agrupados")
         print(create_table_deviation_grouped(table, base, column, average_grouped))
