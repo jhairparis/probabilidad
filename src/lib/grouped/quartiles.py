@@ -69,3 +69,7 @@ def quartiles_grouped(table: DataFrame, base: DataFrame, column: str, amplitude)
     ) / res["Frec.Abso"].get(2)
 
     return {"q1": q1, "q2": q2, "q3": q3, "table_quartiles": res}
+
+
+def RIC_grouped(q1, q3):
+    return q3 - q1

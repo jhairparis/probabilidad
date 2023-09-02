@@ -5,7 +5,7 @@ from lib.grouped.deviation import create_table_deviation_grouped
 from lib.grouped.mc_promedi import add_column_mc_promedi
 from lib.grouped.median_data import median_grouped
 from lib.grouped.mode_data import mode_grouped
-from lib.grouped.quartiles import quartiles_grouped
+from lib.grouped.quartiles import RIC_grouped, quartiles_grouped
 from lib.notGrouped.average import no_grouped_data_average
 from lib.notGrouped.cv import cv_no_grouped
 from lib.notGrouped.deviation import deviation_population, deviation_sample
@@ -13,7 +13,7 @@ from lib.notGrouped.geometric_mean import geometric_mean_no_grouped
 from lib.notGrouped.harmonic_mean import harmonic_mean_no_grouped
 from lib.notGrouped.median_data import median_no_grouped
 from lib.notGrouped.mode_data import mode_no_grouped
-from lib.notGrouped.quartiles import Q1, Q2, Q3, view_graph_moustache
+from lib.notGrouped.quartiles import Q1, Q2, Q3, RIC_no_grouped, view_graph_moustache
 from lib.search_group import search_group
 from question import yesOrNo
 from math import log10
@@ -165,6 +165,10 @@ def create_table_quantitative(column: str, grouped: bool, base, settings):
         print(f"Tabla de cuartiles de {column} agrupados")
         print(quartiles__grouped["table_quartiles"])
 
+        RIC__grouped = RIC_grouped(quartiles__grouped["q1"], quartiles__grouped["q3"])
+
+        print(f"RIC de {column} agrupado: {RIC__grouped}")
+
         print(f"Cuartil Q1 de {column} agrupados: {quartiles__grouped['q1']}")
         print(f"Cuartil Q2 de {column} agrupados: {quartiles__grouped['q2']}")
         print(f"Cuartil Q3 de {column} agrupados: {quartiles__grouped['q3']}\n")
@@ -237,6 +241,10 @@ def create_table_quantitative(column: str, grouped: bool, base, settings):
     q1 = Q1(base, column)
     q2 = Q2(base, column)
     q3 = Q3(base, column)
+
+    RIC_no__grouped = RIC_no_grouped(q1, q3)
+
+    print(f"RIC de {column} no agrupados: {RIC_no__grouped}")
 
     print(f"Cuartil Q1 de {column} no agrupados: {q1}")
     print(f"Cuartil Q2 de {column} no agrupados: {q2}")

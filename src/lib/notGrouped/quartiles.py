@@ -29,3 +29,7 @@ def Q2(base, column):
 
 def Q3(base, column):
     return np.percentile(base[column], 75)
+
+
+def RIC_no_grouped(q1, q3):
+    return q3 - q1
