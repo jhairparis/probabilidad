@@ -2,6 +2,7 @@ from pandas import DataFrame
 from lib.grouped.average import grouped_data_average
 from lib.grouped.cv import cv_grouped
 from lib.grouped.deviation import create_table_deviation_grouped
+from lib.grouped.kurtosis import kurtosis_grouped
 from lib.grouped.mc_promedi import add_column_mc_promedi
 from lib.grouped.median_data import median_grouped
 from lib.grouped.mode_data import mode_grouped
@@ -16,6 +17,7 @@ from lib.notGrouped.cv import cv_no_grouped
 from lib.notGrouped.deviation import deviation_population, deviation_sample
 from lib.notGrouped.geometric_mean import geometric_mean_no_grouped
 from lib.notGrouped.harmonic_mean import harmonic_mean_no_grouped
+from lib.notGrouped.kurtosis import kurtosis_no_grouped
 from lib.notGrouped.median_data import median_no_grouped
 from lib.notGrouped.mode_data import mode_no_grouped
 from lib.notGrouped.quartiles import Q1, Q2, Q3, RIC_no_grouped, view_graph_moustache
@@ -214,6 +216,10 @@ def create_table_quantitative(column: str, grouped: bool, base, settings):
 
         print(f"Asimetria Bowley de {column} agrupados: {skew_bowley__grouped}\n")
 
+        kurtosis__grouped = kurtosis_grouped(table, n, deviation_grouped["value"])
+
+        print(f"Curtosis de {column} agrupados: {kurtosis__grouped}\n")
+
         return table
 
     average_no_grouped = no_grouped_data_average(base, column)
@@ -289,6 +295,10 @@ def create_table_quantitative(column: str, grouped: bool, base, settings):
     skew_bowley_no__grouped = skew_bowley_no_grouped(q1, q2, q3)
 
     print(f"Asimetria Bowley de {column} no agrupados: {skew_bowley_no__grouped}\n")
+
+    kurtosis_no__grouped = kurtosis_no_grouped(base, column)
+
+    print(f"Curtosis de {column} no agrupados: {kurtosis_no__grouped}\n")
 
     if settings["view_moustache"] == True:
         info = {
