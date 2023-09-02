@@ -6,6 +6,11 @@ from lib.grouped.mc_promedi import add_column_mc_promedi
 from lib.grouped.median_data import median_grouped
 from lib.grouped.mode_data import mode_grouped
 from lib.grouped.quartiles import RIC_grouped, quartiles_grouped
+from lib.grouped.skew import (
+    skew_bowley_grouped,
+    skew_fisher_grouped,
+    skew_person_grouped,
+)
 from lib.notGrouped.average import no_grouped_data_average
 from lib.notGrouped.cv import cv_no_grouped
 from lib.notGrouped.deviation import deviation_population, deviation_sample
@@ -14,6 +19,11 @@ from lib.notGrouped.harmonic_mean import harmonic_mean_no_grouped
 from lib.notGrouped.median_data import median_no_grouped
 from lib.notGrouped.mode_data import mode_no_grouped
 from lib.notGrouped.quartiles import Q1, Q2, Q3, RIC_no_grouped, view_graph_moustache
+from lib.notGrouped.skew import (
+    skew_bowley_no_grouped,
+    skew_fisher_no_grouped,
+    skew_person_no_grouped,
+)
 from lib.search_group import search_group
 from question import yesOrNo
 from math import log10
@@ -167,7 +177,7 @@ def create_table_quantitative(column: str, grouped: bool, base, settings):
 
         RIC__grouped = RIC_grouped(quartiles__grouped["q1"], quartiles__grouped["q3"])
 
-        print(f"RIC de {column} agrupado: {RIC__grouped}")
+        print(f"RIC de {column} agrupados: {RIC__grouped}")
 
         print(f"Cuartil Q1 de {column} agrupados: {quartiles__grouped['q1']}")
         print(f"Cuartil Q2 de {column} agrupados: {quartiles__grouped['q2']}")
@@ -185,8 +195,24 @@ def create_table_quantitative(column: str, grouped: bool, base, settings):
         cv__grouped = cv_grouped(deviation_grouped["value"], average_grouped)
 
         print(
-            f"Coeficiente de variacion de {column}: {percentage_view(cv__grouped,settings)}"
+            f"Coeficiente de variacion de {column} agrupados: {percentage_view(cv__grouped,settings)}\n"
         )
+
+        skew_fisher__grouped = skew_fisher_grouped(table, n, deviation_grouped["value"])
+
+        print(f"Asimetria Fisher de {column} agrupados: {skew_fisher__grouped}\n")
+
+        skew_person__grouped = skew_person_grouped(
+            average_grouped, mode__grouped, deviation_grouped["value"]
+        )
+
+        print(f"Asimetria Person de {column} agrupados: {skew_person__grouped}\n")
+
+        skew_bowley__grouped = skew_bowley_grouped(
+            quartiles__grouped["q1"], quartiles__grouped["q2"], quartiles__grouped["q3"]
+        )
+
+        print(f"Asimetria Bowley de {column} agrupados: {skew_bowley__grouped}\n")
 
         return table
 
@@ -235,7 +261,7 @@ def create_table_quantitative(column: str, grouped: bool, base, settings):
     cv_no__grouped = cv_no_grouped(deviation_s, average_no_grouped)
 
     print(
-        f"Coeficiente de variacion de {column}: {percentage_view(cv_no__grouped,settings)}"
+        f"Coeficiente de variacion de {column} no agrupados: {percentage_view(cv_no__grouped,settings)}\n"
     )
 
     q1 = Q1(base, column)
@@ -248,7 +274,21 @@ def create_table_quantitative(column: str, grouped: bool, base, settings):
 
     print(f"Cuartil Q1 de {column} no agrupados: {q1}")
     print(f"Cuartil Q2 de {column} no agrupados: {q2}")
-    print(f"Cuartil Q3 de {column} no agrupados: {q3}")
+    print(f"Cuartil Q3 de {column} no agrupados: {q3}\n")
+
+    skew_fisher_no__grouped = skew_fisher_no_grouped(base, column)
+
+    print(f"Asimetria Fisher de {column} no agrupados: {skew_fisher_no__grouped}\n")
+
+    skew_person_no__grouped = skew_person_no_grouped(
+        average_no_grouped, mode_no__grouped, deviation_s
+    )
+
+    print(f"Asimetria Person de {column} no agrupados: {skew_person_no__grouped}\n")
+
+    skew_bowley_no__grouped = skew_bowley_no_grouped(q1, q2, q3)
+
+    print(f"Asimetria Bowley de {column} no agrupados: {skew_bowley_no__grouped}\n")
 
     if settings["view_moustache"] == True:
         info = {
