@@ -6,24 +6,32 @@ from lib.qualitative import create_table_qualitative
 from question import questions_settings, yesOrNo
 
 
+def manage_qualitative(columns, data, settings):
+    for column in columns:
+        nominal = columns[column]
+        table = create_table_qualitative(column, not nominal, data, settings)
+
+        print("\n Tabla de frecuencias de " + column)
+        print(table)
+
+
 exit = False
 while not exit:
     excel_table = read_excel()
 
     settings = questions_settings(excel_table["headers"])
 
-    for column in settings["qualitative"]:
-        nominal = settings["qualitative"][column]
-        table = create_table_qualitative(column, not nominal, excel_table["data"], settings)
+    manage_qualitative(settings["qualitative"], excel_table["data"], settings)
 
-        print("\n Tabla de frecuencias de " + column)
-        print(table)
+    if len(settings["qualitative"]) > 0:
+        print("\n------------\n")
 
-    print("\n------------\n")
-
+    # manage columns quantitative
     for column in settings["quantitative"]:
         grouped = settings["quantitative"][column]
-        table, main_values = create_table_quantitative(column, excel_table["data"], settings)
+        table, main_values = create_table_quantitative(
+            column, excel_table["data"], settings
+        )
 
         print("\n Tabla de frecuencias de " + column)
         print(table)
