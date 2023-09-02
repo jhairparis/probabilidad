@@ -1,43 +1,47 @@
-from convert import terminal_convert
-from lib.exam.main import exam
+from lib.grouped.run import run_grouped_data_info
+from lib.notGrouped.run import run_no_grouped_data_info
 from lib.read_file import read_excel
-from lib.tables import create_table_qualitative, create_table_quantitative
+from lib.quantitative import create_table_quantitative
+from lib.qualitative import create_table_qualitative
 from question import questions_settings, yesOrNo
-import matplotlib.pyplot as plt
 
 
 exit = False
 while not exit:
-    base = read_excel()
+    excel_table = read_excel()
 
-    other = yesOrNo("Question of exam?")
-    if other:
-        exam(base["data"], base["headers"])
-        break
+    settings = questions_settings(excel_table["headers"])
 
-    run_convert = yesOrNo("Do you need convert?")
-    if run_convert:
-        terminal_convert()
-        break
+    for column in settings["qualitative"]:
+        nominal = settings["qualitative"][column]
+        table = create_table_qualitative(column, not nominal, excel_table["data"], settings)
 
-    settings = questions_settings(base["headers"])
+        print("\n Tabla de frecuencias de " + column)
+        print(table)
 
-    for i in settings["qualitative"]:
-        nominal = settings["qualitative"][i]
-        t = create_table_qualitative(i, not nominal, base["data"], settings)
+    print("\n------------\n")
 
-        print("\n Tabla de frecuencias de " + i)
-        print(t)
+    for column in settings["quantitative"]:
+        grouped = settings["quantitative"][column]
+        table, main_values = create_table_quantitative(column, excel_table["data"], settings)
 
-        # Todo: Make Graph
+        print("\n Tabla de frecuencias de " + column)
+        print(table)
 
-    for i in settings["quantitative"]:
-        discrete = settings["quantitative"][i]
-        t = create_table_quantitative(i, discrete, base["data"], settings)
+        print(
+            "\n ⚠️ El grupo dado es encontrado entre el Li y Ls de la tabla de frecuencia ⚠️ \n"
+        )
 
-        print("\n Tabla de frecuencias de " + i)
-        print(t)
-
-        # Todo: Make Graph
+        if grouped:
+            run_grouped_data_info(
+                table,
+                excel_table["data"],
+                column,
+                main_values["n"],
+                main_values["amplitude"],
+                settings,
+            )
+        else:
+            run_no_grouped_data_info(table, excel_table["data"], column, settings)
 
     exit = yesOrNo("Desea salir?")
