@@ -1,11 +1,13 @@
 from pandas import DataFrame
 from lib.grouped.average import grouped_data_average
+from lib.grouped.cv import cv_grouped
 from lib.grouped.deviation import create_table_deviation_grouped
 from lib.grouped.mc_promedi import add_column_mc_promedi
 from lib.grouped.median_data import median_grouped
 from lib.grouped.mode_data import mode_grouped
 from lib.grouped.quartiles import quartiles_grouped
 from lib.notGrouped.average import no_grouped_data_average
+from lib.notGrouped.cv import cv_no_grouped
 from lib.notGrouped.deviation import deviation_population, deviation_sample
 from lib.notGrouped.geometric_mean import geometric_mean_no_grouped
 from lib.notGrouped.harmonic_mean import harmonic_mean_no_grouped
@@ -167,8 +169,20 @@ def create_table_quantitative(column: str, grouped: bool, base, settings):
         print(f"Cuartil Q2 de {column} agrupados: {quartiles__grouped['q2']}")
         print(f"Cuartil Q3 de {column} agrupados: {quartiles__grouped['q3']}\n")
 
+        deviation_grouped = create_table_deviation_grouped(
+            table, base, column, average_grouped
+        )
+
         print(f"Tabla de Desviacion de {column} agrupados")
-        print(create_table_deviation_grouped(table, base, column, average_grouped))
+        print(deviation_grouped["table"])
+
+        print(f"Desviacion de {column} agrupados: {deviation_grouped['value']}\n")
+
+        cv__grouped = cv_grouped(deviation_grouped["value"], average_grouped)
+
+        print(
+            f"Coeficiente de variacion de {column}: {percentage_view(cv__grouped,settings)}"
+        )
 
         return table
 
@@ -212,6 +226,12 @@ def create_table_quantitative(column: str, grouped: bool, base, settings):
 
     print(
         f"Desviacion de {column} no agrupados tipo poblacional: {deviation_p} en el grupo: {search_group(table,deviation_p)}\n"
+    )
+
+    cv_no__grouped = cv_no_grouped(deviation_s, average_no_grouped)
+
+    print(
+        f"Coeficiente de variacion de {column}: {percentage_view(cv_no__grouped,settings)}"
     )
 
     q1 = Q1(base, column)

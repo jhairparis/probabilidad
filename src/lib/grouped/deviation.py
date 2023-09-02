@@ -72,4 +72,4 @@ def create_table_deviation_grouped(
 
     DeviationTable = DataFrame(d, index=[1, 2, 3], columns=headers)
 
-    return DeviationTable
+    return {"table": DeviationTable, "value": deviation}
