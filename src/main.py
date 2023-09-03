@@ -4,6 +4,13 @@ from lib.read_file import read_excel
 from lib.quantitative.main import create_table_quantitative
 from lib.qualitative.main import create_table_qualitative
 from lib.user_cli import UserCLI
+import os
+
+
+if os.name == "nt":
+    os.system("cls")
+else:
+    os.system("clear")
 
 
 def manage_qualitative(columns, data, cli: UserCLI):
