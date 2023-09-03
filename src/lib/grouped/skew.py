@@ -1,7 +1,7 @@
 from pandas import DataFrame
 
 
-def skew_fisher_grouped(Table: DataFrame, n, S):
+def skew_fisher_grouped(Table: DataFrame, n: int, S: float):
     sum_product = 0
     for i in range(1, len(Table) + 1):
         product = (

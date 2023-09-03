@@ -1,15 +1,15 @@
 from pandas import DataFrame
 from lib.percentage_view import percentage_view
-from question import yesOrNo
+from user_cli import UserCLI
 
 
-def create_table_qualitative(column: str, ordinal: bool, base, settings):
+def create_table_qualitative(column: str, ordinal: bool, base: DataFrame, cli: UserCLI):
     total_frec_absoluta = base[column].count()
     absolute = base[column].value_counts()
     index = absolute.keys()
 
     if ordinal == True:
-        res = yesOrNo("{} will be ordered ASC(Y) or DESC(N)?".format(column))
+        res = cli.yesOrNo(f"{column} will be ordered ASC(Y) or DESC(N)?")
         index = index.sort_values(ascending=res)
 
     relative = {}
@@ -26,7 +26,7 @@ def create_table_qualitative(column: str, ordinal: bool, base, settings):
         val = absolute[key]
 
         v = val / total_frec_absoluta
-        relative[key] = percentage_view(v, settings)
+        relative[key] = percentage_view(v, cli)
 
         if ordinal == True:
             absoluteAcum[key] = val + oldAbsolute
@@ -34,7 +34,7 @@ def create_table_qualitative(column: str, ordinal: bool, base, settings):
 
             relAcumCurrent = v + oldRelative
 
-            relativeAcum[key] = percentage_view(relAcumCurrent, settings)
+            relativeAcum[key] = percentage_view(relAcumCurrent, cli)
 
             oldRelative += v
 

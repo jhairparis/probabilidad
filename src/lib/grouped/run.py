@@ -1,3 +1,4 @@
+from pandas import DataFrame
 from lib.grouped.average import grouped_data_average
 from lib.grouped.cv import cv_grouped
 from lib.grouped.deviation import create_table_deviation_grouped
@@ -13,9 +14,17 @@ from lib.grouped.skew import (
 )
 from lib.percentage_view import percentage_view
 from lib.search_group import search_group
+from user_cli import UserCLI
 
 
-def run_grouped_data_info(table, base, column, n, amplitude, settings):
+def run_grouped_data_info(
+    table: DataFrame,
+    base: DataFrame,
+    column: str,
+    n: int,
+    amplitude: float,
+    cli: UserCLI,
+):
     average_grouped = grouped_data_average(table, base, column)
 
     print(
@@ -70,7 +79,7 @@ def run_grouped_data_info(table, base, column, n, amplitude, settings):
     cv__grouped = cv_grouped(deviation_grouped["value"], average_grouped)
 
     print(
-        f"Coeficiente de variacion de {column} agrupados: {percentage_view(cv__grouped,settings)}\n"
+        f"Coeficiente de variacion de {column} agrupados: {percentage_view(cv__grouped,cli)}\n"
     )
 
     skew_fisher__grouped = skew_fisher_grouped(table, n, deviation_grouped["value"])

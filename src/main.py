@@ -3,35 +3,36 @@ from lib.notGrouped.run import run_no_grouped_data_info
 from lib.read_file import read_excel
 from lib.quantitative import create_table_quantitative
 from lib.qualitative import create_table_qualitative
-from question import questions_settings, yesOrNo
+from user_cli import UserCLI
 
 
-def manage_qualitative(columns, data, settings):
+def manage_qualitative(columns, data, cli: UserCLI):
+    print("Varibles cualitativas\n")
     for column in columns:
         nominal = columns[column]
-        table = create_table_qualitative(column, not nominal, data, settings)
+        table = create_table_qualitative(column, not nominal, data, cli)
 
         print("\n Tabla de frecuencias de " + column)
         print(table)
 
 
 exit = False
+cli = UserCLI()
+excel_table = read_excel(cli)
+
 while not exit:
-    excel_table = read_excel()
+    cli.init(excel_table["headers"])
 
-    settings = questions_settings(excel_table["headers"])
+    manage_qualitative(cli.answers["qualitative"], excel_table["data"], cli)
 
-    manage_qualitative(settings["qualitative"], excel_table["data"], settings)
-
-    if len(settings["qualitative"]) > 0:
+    if len(cli.answers["qualitative"]) > 0:
         print("\n------------\n")
 
+    print("Varibles cuantitativas\n")
     # manage columns quantitative
-    for column in settings["quantitative"]:
-        grouped = settings["quantitative"][column]
-        table, main_values = create_table_quantitative(
-            column, excel_table["data"], settings
-        )
+    for column in cli.answers["quantitative"]:
+        grouped = cli.answers["quantitative"][column]
+        table, main_values = create_table_quantitative(column, excel_table["data"], cli)
 
         print("\n Tabla de frecuencias de " + column)
         print(table)
@@ -47,9 +48,16 @@ while not exit:
                 column,
                 main_values["n"],
                 main_values["amplitude"],
-                settings,
+                cli,
             )
         else:
-            run_no_grouped_data_info(table, excel_table["data"], column, settings)
+            run_no_grouped_data_info(
+                table,
+                excel_table["data"],
+                column,
+                main_values["min"],
+                main_values["max"],
+                cli,
+            )
 
-    exit = yesOrNo("Desea salir?")
+    exit = cli.yesOrNo("¿Desea salir?")

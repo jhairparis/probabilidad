@@ -1,7 +1,7 @@
 from pandas import DataFrame
 
 
-def quartiles_grouped(table: DataFrame, base: DataFrame, column: str, amplitude):
+def quartiles_grouped(Table: DataFrame, base: DataFrame, column: str, amplitude: float):
     Q = []
     cluster = []
     li = []
@@ -23,35 +23,35 @@ def quartiles_grouped(table: DataFrame, base: DataFrame, column: str, amplitude)
     Q.append(3 * (base[column].count() + 1) / 4)
 
     valid = [False, False, False]
-    for i in range(1, len(table) + 1):
-        if table["Frec.Absoluta.Acum"].get(i) >= Q[0] and not valid[0]:
+    for i in range(1, len(Table) + 1):
+        if Table["Frec.Absoluta.Acum"].get(i) >= Q[0] and not valid[0]:
             cluster.append(i)
-            li.append(table["Li"].get(i))
-            if table["Frec.Absoluta.Acum"].get(i - 1):
-                frecAbsAcumAnter.append(table["Frec.Absoluta.Acum"].get(i - 1))
+            li.append(Table["Li"].get(i))
+            if Table["Frec.Absoluta.Acum"].get(i - 1):
+                frecAbsAcumAnter.append(Table["Frec.Absoluta.Acum"].get(i - 1))
             else:
                 frecAbsAcumAnter.append(0)
-            frecAbso.append(table["Frec.Absoluta"].get(i))
+            frecAbso.append(Table["Frec.Absoluta"].get(i))
             valid[0] = True
 
-        if table["Frec.Absoluta.Acum"].get(i) >= Q[1] and not valid[1]:
+        if Table["Frec.Absoluta.Acum"].get(i) >= Q[1] and not valid[1]:
             cluster.append(i)
-            li.append(table["Li"].get(i))
-            if table["Frec.Absoluta.Acum"].get(i - 1):
-                frecAbsAcumAnter.append(table["Frec.Absoluta.Acum"].get(i - 1))
+            li.append(Table["Li"].get(i))
+            if Table["Frec.Absoluta.Acum"].get(i - 1):
+                frecAbsAcumAnter.append(Table["Frec.Absoluta.Acum"].get(i - 1))
             else:
                 frecAbsAcumAnter.append(0)
-            frecAbso.append(table["Frec.Absoluta"].get(i))
+            frecAbso.append(Table["Frec.Absoluta"].get(i))
             valid[1] = True
 
-        if table["Frec.Absoluta.Acum"].get(i) >= Q[2] and not valid[2]:
+        if Table["Frec.Absoluta.Acum"].get(i) >= Q[2] and not valid[2]:
             cluster.append(i)
-            li.append(table["Li"].get(i))
-            if table["Frec.Absoluta.Acum"].get(i - 1):
-                frecAbsAcumAnter.append(table["Frec.Absoluta.Acum"].get(i - 1))
+            li.append(Table["Li"].get(i))
+            if Table["Frec.Absoluta.Acum"].get(i - 1):
+                frecAbsAcumAnter.append(Table["Frec.Absoluta.Acum"].get(i - 1))
             else:
                 frecAbsAcumAnter.append(0)
-            frecAbso.append(table["Frec.Absoluta"].get(i))
+            frecAbso.append(Table["Frec.Absoluta"].get(i))
             valid[2] = True
 
     res = DataFrame(data)
@@ -71,5 +71,5 @@ def quartiles_grouped(table: DataFrame, base: DataFrame, column: str, amplitude)
     return {"q1": q1, "q2": q2, "q3": q3, "table_quartiles": res}
 
 
-def RIC_grouped(q1, q3):
+def RIC_grouped(q1: float, q3: float):
     return q3 - q1

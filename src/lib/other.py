@@ -1,6 +1,6 @@
 from convert import terminal_convert
 from lib.exam.main import exam
-from question import yesOrNo
+from user_cli import yesOrNo
 
 
 def run_other(base):

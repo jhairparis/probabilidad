@@ -1,2 +1,2 @@
-def cv_grouped(S, average):
+def cv_grouped(S: float, average: float):
     return S / average

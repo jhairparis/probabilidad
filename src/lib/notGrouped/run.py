@@ -1,3 +1,4 @@
+from pandas import DataFrame
 from lib.notGrouped.average import no_grouped_data_average
 from lib.notGrouped.cv import cv_no_grouped
 from lib.notGrouped.deviation import deviation_population, deviation_sample
@@ -14,9 +15,12 @@ from lib.notGrouped.skew import (
 )
 from lib.percentage_view import percentage_view
 from lib.search_group import search_group
+from user_cli import UserCLI
 
 
-def run_no_grouped_data_info(table, base, column, settings):
+def run_no_grouped_data_info(
+    table: DataFrame, base: DataFrame, column: str, min: float, max: float, cli: UserCLI
+):
     average_no_grouped = no_grouped_data_average(base, column)
 
     print(
@@ -62,7 +66,7 @@ def run_no_grouped_data_info(table, base, column, settings):
     cv_no__grouped = cv_no_grouped(deviation_s, average_no_grouped)
 
     print(
-        f"Coeficiente de variacion de {column} no agrupados: {percentage_view(cv_no__grouped,settings)}\n"
+        f"Coeficiente de variacion de {column} no agrupados: {percentage_view(cv_no__grouped,cli)}\n"
     )
 
     q1 = Q1(base, column)
@@ -95,7 +99,7 @@ def run_no_grouped_data_info(table, base, column, settings):
 
     print(f"Curtosis de {column} no agrupados: {kurtosis_no__grouped}\n")
 
-    if settings["view_moustache"] == True:
+    if cli.answers["view_moustache"] == True:
         info = {
             "median": median_no__grouped,
             "q1": q1,

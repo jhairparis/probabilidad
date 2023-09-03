@@ -1,19 +1,19 @@
 from pandas import DataFrame
 
 
-def median_grouped(table: DataFrame, amplitud, media):
+def median_grouped(Table: DataFrame, amplitude: float, media: float):
     faacmed = 0
     licmed = 0
     fcmed = 0
 
     findFaacmed = False
 
-    for i in range(1, len(table) + 1):
-        if table["Frec.Absoluta.Acum"].get(i) - media >= 0 and findFaacmed == False:
-            if table["Frec.Absoluta.Acum"].get(i - 1):
-                faacmed = table["Frec.Absoluta.Acum"].get(i - 1)
-            licmed = table["Li"].get(i)
-            fcmed = table["Frec.Absoluta"].get(i)
+    for i in range(1, len(Table) + 1):
+        if Table["Frec.Absoluta.Acum"].get(i) - media >= 0 and findFaacmed == False:
+            if Table["Frec.Absoluta.Acum"].get(i - 1):
+                faacmed = Table["Frec.Absoluta.Acum"].get(i - 1)
+            licmed = Table["Li"].get(i)
+            fcmed = Table["Frec.Absoluta"].get(i)
             findFaacmed = True
 
-    return licmed + amplitud * ((media - faacmed) / fcmed)
+    return licmed + amplitude * ((media - faacmed) / fcmed)

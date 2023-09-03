@@ -3,7 +3,7 @@ from pandas import DataFrame
 
 
 def create_table_deviation_grouped(
-    Table: DataFrame, base: DataFrame, column: str, average_grouped
+    Table: DataFrame, base: DataFrame, column: str, average_grouped: float
 ):
     sumProduct = 0
     total = Table["Frec.Absoluta"].sum()

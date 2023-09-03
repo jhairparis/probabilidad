@@ -1,11 +1,10 @@
 from pandas import DataFrame
-from lib.grouped.run import run_grouped_data_info
-from lib.notGrouped.run import run_no_grouped_data_info
 from lib.percentage_view import percentage_view
 from math import log10
+from user_cli import UserCLI
 
 
-def create_table_quantitative(column: str, base, settings):
+def create_table_quantitative(column: str, base: DataFrame, cli: UserCLI):
     # init vars
     n = base[column].count()
     category = int(round(1 + 3.32 * log10(n), 0))
@@ -47,13 +46,13 @@ def create_table_quantitative(column: str, base, settings):
         row.append(freAbs)
 
         freRel = freAbs / n
-        row.append(percentage_view(freRel, settings))
+        row.append(percentage_view(freRel, cli))
 
         freAbsAcum = freAbs + freAbsAcumOld
         row.append(freAbsAcum)
 
         freRelAcum = freRel + freRelAcumOld
-        row.append(percentage_view(freRelAcum, settings))
+        row.append(percentage_view(freRelAcum, cli))
 
         li = ls
         freAbsAcumOld = freAbsAcum
