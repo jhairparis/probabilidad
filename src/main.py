@@ -21,7 +21,7 @@ cli = UserCLI()
 excel_table = read_excel(cli)
 
 while not exit:
-    cli.init(excel_table["headers"])
+    cli.init(excel_table)
 
     manage_qualitative(cli.answers["qualitative"], excel_table["data"], cli)
 

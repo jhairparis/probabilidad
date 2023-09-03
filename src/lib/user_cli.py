@@ -4,7 +4,34 @@ import inquirer
 class UserCLI:
     answers = {"qualitative": {}, "quantitative": {}}
 
-    def init(self, headers: list):
+    def ai(self, df, help):
+        variables_n = []
+        variables_or = []
+        variables_cu = []
+
+        for column in df.columns:
+            tipo = df[column].dtype
+
+            if tipo == "object":
+                if help:
+                    self.answers["qualitative"][column] = True
+                variables_n.append(column)
+            elif tipo == "int64" or tipo == "float64":
+                if help:
+                    self.answers["quantitative"][column] = True
+                variables_cu.append(column)
+            else:
+                if help:
+                    self.answers["qualitative"][column] = False
+                variables_or.append(column)
+
+        return {
+            "nominal": variables_n,
+            "ordinal": variables_or,
+            "cuantitativa": variables_cu,
+        }
+
+    def question_of_column(self, headers):
         q = inquirer.prompt(
             [
                 inquirer.Checkbox(
@@ -59,6 +86,21 @@ class UserCLI:
                     self.answers["quantitative"][value] = True
                 else:
                     self.answers["quantitative"][value] = False
+
+    def init(self, data: dict):
+        noob = self.twoOptions("¿Eres un usuario noob?", ["Lo soy", "NO"])
+
+        res = self.ai(data["data"], noob)
+        if not noob:
+            print("Aqui una posible ayuda: ")
+
+        print(f"Varibles cualitativas nominales: {res['nominal']}")
+        print(f"Varibles cualitativas ordinales: {res['ordinal']}")
+        print(f"Varibles cuantitativas agrupadas: {res['cuantitativa']} \n")
+
+        if not noob:
+            headers = data["headers"]
+            self.question_of_column(headers)
 
         q3 = inquirer.prompt(
             [
