@@ -1,7 +1,6 @@
 import inquirer
 from pandas import DataFrame
-
-from lib.exam.average import average_all
+from lib.other.average import average_all
 
 
 def exam(base: DataFrame, headers: dict):

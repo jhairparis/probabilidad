@@ -1,6 +1,5 @@
 from pandas import DataFrame
-
-from lib.notGrouped.average import no_grouped_data_average
+from lib.quantitative.notGrouped.average import no_grouped_data_average
 
 
 def average_all(base: DataFrame, data: str):

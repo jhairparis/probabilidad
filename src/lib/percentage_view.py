@@ -1,4 +1,4 @@
-from user_cli import UserCLI
+from lib.user_cli import UserCLI
 
 
 def percentage_view(val, cli: UserCLI):

@@ -1,21 +1,27 @@
 from pandas import DataFrame
-from lib.notGrouped.average import no_grouped_data_average
-from lib.notGrouped.cv import cv_no_grouped
-from lib.notGrouped.deviation import deviation_population, deviation_sample
-from lib.notGrouped.geometric_mean import geometric_mean_no_grouped
-from lib.notGrouped.harmonic_mean import harmonic_mean_no_grouped
-from lib.notGrouped.kurtosis import kurtosis_no_grouped
-from lib.notGrouped.median_data import median_no_grouped
-from lib.notGrouped.mode_data import mode_no_grouped
-from lib.notGrouped.quartiles import Q1, Q2, Q3, RIC_no_grouped, view_graph_moustache
-from lib.notGrouped.skew import (
+from lib.quantitative.notGrouped.average import no_grouped_data_average
+from lib.quantitative.notGrouped.cv import cv_no_grouped
+from lib.quantitative.notGrouped.deviation import deviation_population, deviation_sample
+from lib.quantitative.notGrouped.geometric_mean import geometric_mean_no_grouped
+from lib.quantitative.notGrouped.harmonic_mean import harmonic_mean_no_grouped
+from lib.quantitative.notGrouped.kurtosis import kurtosis_no_grouped
+from lib.quantitative.notGrouped.median_data import median_no_grouped
+from lib.quantitative.notGrouped.mode_data import mode_no_grouped
+from lib.quantitative.notGrouped.quartiles import (
+    Q1,
+    Q2,
+    Q3,
+    RIC_no_grouped,
+    view_graph_moustache,
+)
+from lib.quantitative.notGrouped.skew import (
     skew_bowley_no_grouped,
     skew_fisher_no_grouped,
     skew_person_no_grouped,
 )
 from lib.percentage_view import percentage_view
 from lib.search_group import search_group
-from user_cli import UserCLI
+from lib.user_cli import UserCLI
 
 
 def run_no_grouped_data_info(

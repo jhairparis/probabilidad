@@ -1,5 +1,5 @@
 from pandas import read_excel as pd_read_excel
-from user_cli import UserCLI
+from lib.user_cli import UserCLI
 
 
 def read_excel(cli: UserCLI):

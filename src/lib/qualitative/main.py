@@ -1,6 +1,6 @@
 from pandas import DataFrame
 from lib.percentage_view import percentage_view
-from user_cli import UserCLI
+from lib.user_cli import UserCLI
 
 
 def create_table_qualitative(column: str, ordinal: bool, base: DataFrame, cli: UserCLI):

@@ -1,20 +1,20 @@
 from pandas import DataFrame
-from lib.grouped.average import grouped_data_average
-from lib.grouped.cv import cv_grouped
-from lib.grouped.deviation import create_table_deviation_grouped
-from lib.grouped.kurtosis import kurtosis_grouped
-from lib.grouped.mc_promedi import add_column_mc_promedi
-from lib.grouped.median_data import median_grouped
-from lib.grouped.mode_data import mode_grouped
-from lib.grouped.quartiles import RIC_grouped, quartiles_grouped
-from lib.grouped.skew import (
+from lib.quantitative.grouped.average import grouped_data_average
+from lib.quantitative.grouped.cv import cv_grouped
+from lib.quantitative.grouped.deviation import create_table_deviation_grouped
+from lib.quantitative.grouped.kurtosis import kurtosis_grouped
+from lib.quantitative.grouped.mc_promedi import add_column_mc_promedi
+from lib.quantitative.grouped.median_data import median_grouped
+from lib.quantitative.grouped.mode_data import mode_grouped
+from lib.quantitative.grouped.quartiles import RIC_grouped, quartiles_grouped
+from lib.quantitative.grouped.skew import (
     skew_bowley_grouped,
     skew_fisher_grouped,
     skew_person_grouped,
 )
 from lib.percentage_view import percentage_view
 from lib.search_group import search_group
-from user_cli import UserCLI
+from lib.user_cli import UserCLI
 
 
 def run_grouped_data_info(

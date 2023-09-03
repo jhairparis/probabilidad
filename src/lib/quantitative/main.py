@@ -1,7 +1,7 @@
 from pandas import DataFrame
 from lib.percentage_view import percentage_view
 from math import log10
-from user_cli import UserCLI
+from lib.user_cli import UserCLI
 
 
 def create_table_quantitative(column: str, base: DataFrame, cli: UserCLI):
