@@ -27,8 +27,8 @@ while not exit:
 
     if len(cli.answers["qualitative"]) > 0:
         print("\n------------\n")
+        print("Varibles cuantitativas\n")
 
-    print("Varibles cuantitativas\n")
     # manage columns quantitative
     for column in cli.answers["quantitative"]:
         grouped = cli.answers["quantitative"][column]

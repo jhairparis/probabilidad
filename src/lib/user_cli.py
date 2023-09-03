@@ -90,6 +90,21 @@ class UserCLI:
         ]
         return inquirer.prompt(q)["answer"]
 
+    def twoOptions(self, msg: str, options: list):
+        q = [
+            inquirer.List(
+                "answer",
+                message=msg,
+                choices=[options[0], options[1]],
+                default=options[0],
+            ),
+        ]
+
+        if inquirer.prompt(q)["answer"] == options[0]:
+            return True
+        else:
+            return False
+
     def get_path(self, msg: str):
         print(
             "(Recuerda que la hoja del excel se debe llamar DB y tener la columna indice en la columna A)"

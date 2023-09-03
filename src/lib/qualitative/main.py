@@ -9,7 +9,9 @@ def create_table_qualitative(column: str, ordinal: bool, base: DataFrame, cli: U
     index = absolute.keys()
 
     if ordinal == True:
-        res = cli.yesOrNo(f"{column} will be ordered ASC(Y) or DESC(N)?")
+        res = cli.twoOptions(
+            f"¿Como se debe organizar la columna {column}?", ["ASC", "DESC"]
+        )
         index = index.sort_values(ascending=res)
 
     relative = {}
